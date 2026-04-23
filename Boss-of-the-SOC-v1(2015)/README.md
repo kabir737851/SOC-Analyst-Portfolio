@@ -78,12 +78,32 @@ index=botsv1 sourcetype=*dns "192.168.250.100" | search "query_type{}"=A |stats 
 ![Domain 2](screenshots/Domain2.png)
 
 ## Findings:-
-- Total 234 DNS events found.
-- Found 2 suspicious domain one is solidaritedeproximite.org and another cerberhhyed5frqa.xmfir0.win
-- This domain cerberhhyed5frqa.xmfir0.win
+- Total **234 DNS** events found.
+- Found 2 suspicious domain one is **solidaritedeproximite.org** and another **cerberhhyed5frqa.xmfir0.win**
+- This domain **cerberhhyed5frqa.xmfir0.win**
 - It looks like it’s not human readable one looked very fishy as compared to another one. Unusual one.
 
 **Answer: cerberhhyed5frqa.xmfir0.win**
+
+**203. What was the first suspicious domain visited by we8105desk on 24AUG2016?**
+**Ans**
+## Analysis
+- To find the first domain accessed by the user, I slightly modified my previous query.
+- Instead of counting domains, I added time **(_time)** and removed the count so I could see the events in order.
+```spl
+index=botsv1 sourcetype=*dns "192.168.250.100" "query_type{}"=A |sort _time | table _time query
+```
+![Suspicious Domain](screenshots/suspicious_domain.png)
+
+## Findings:-
+•	Sorted all DNS queries by time (earliest first)
+•	Looked at the sequence of domains accessed
+•	Earlier, I had two suspicious domains **(.org and .win)**
+•	By checking the events in time order, I found which domain was accessed first by the system **we8105desk on 24 AUG 2016**
+•	The first domain which was accessed was solidaritedeproximite.org
+
+**Answer: solidaritedeproximite.org**
+
 
 
 
