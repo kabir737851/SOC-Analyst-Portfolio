@@ -46,6 +46,18 @@ index=botsv1 host=we8105desk | stats count by src_ip | sort - count
 ```spl
 index=botsv1 sourcetype=suricata "cerber"
 ```
+![Alert Investigation](screenshots/alert_signature_id.png)
+
+- This search returned **5 events** related to Cerber
+- Each event contains a field called **alert.signature_id**, which shows which detection rule was triggered.
+- Since the question asks to find **which alert occurred the least number of times**, so I used another query to count how many times each signature ID appears.
+```spl
+index=botsv1 sourcetype=suricata "cerber" | stats count by alert.signature_id
+```
+- This query groups the events by signature id.
+- It counts how many times each one appears and sorts them from lowest to highest.
+
+**Answer: 2816763**
 
 
 
