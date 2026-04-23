@@ -9,20 +9,29 @@ Alice has seen this before... ransomware. After a quick conversation with Bob, A
 Alice had just started her job. While reviewing the ticketing queue, she discovered a critical ticket that had not been addressed. On 24 August 2016, a computer named **we8105desk** (used by Bob Smith) was infected with **ransomware**. The issue began when Bob Smith found a USB device in the parking lot and plugged it into his computer. He then opened a file named **“Miranda_Tate_unveiled.dotm”** from the USB
 
 After opening the file, the system showed clear signs of ransomware:
-•	Files became inaccessible 
-•	The desktop wallpaper changed 
-•	Unexpected audio started playing 
+- Files became inaccessible
+- The desktop wallpaper changed
+- Unexpected audio started playing 
 
 This indicates that the file contained malicious macros, which executed and installed ransomware on the system.
 
 ## Detection Details:-
 
-•	**User:** Bob Smith 
-•	**Date of Incident:** 24 August 2016
-•	**Host Machine:** we8105desk (Windows 10) 
-•	**Attack Vector:** USB (Removable Media) 
-•	**Malicious File:** Miranda_Tate_unveiled.dotm 
-•	**Infection Type:** Ransomware
+- **User:** Bob Smith 
+- **Date of Incident:** 24 August 2016
+- **Host Machine:** we8105desk (Windows 10) 
+- **Attack Vector:** USB (Removable Media) 
+- **Malicious File:** Miranda_Tate_unveiled.dotm 
+- **Infection Type:** Ransomware
+
+**200. What was the most likely IPv4 address of we8105desk on 24AUG2016?**
+**Ans:** From the scenario, we already know that the affected machine is **we8105desk.**
+This is also confirmed from the file **Alice-Journal.html**, which contains details about the incident.
+To find the IP address of this machine, I searched the Splunk logs using the hostname.
+I used the following query:
+```spl
+index=botsv1 host=we8105desk | stats count by src_ip | sort - count
+
 
 
 
