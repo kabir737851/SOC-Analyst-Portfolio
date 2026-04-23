@@ -74,8 +74,8 @@ index=botsv1 sourcetype=*dns "192.168.250.100" | search "query_type{}"=A |stats 
 - Then used the infected IPV4 machine IP 192.168.250.100.
 - Then filtered A records (query_type{}=A) to get the domain lookup.
 - Finally searched with query using count by.
-![Domain 1](screenshots/Domain 1.png)
-![Domain 2](screenshots/Domain 2.png)
+![Domain 1](screenshots/Domain1.png)
+![Domain 2](screenshots/Domain2.png)
 
 ## Findings:-
 - Total 234 DNS events found.
