@@ -61,7 +61,7 @@ index=botsv1 sourcetype=suricata "cerber" | stats count by alert.signature_id
 **Answer: 2816763**
 
 **202. What fully qualified domain name (FQDN) does the Cerber ransomware attempt to direct the user to at the end of its encryption phase?**
-**Ans** 
+**Ans:** 
 ## Analysis:-
 - To identify the domain (FQDN) used by the Cerber ransomware, I analyze DNS logs in Splunk.
 - DNS (Domain Name System) is responsible for converting domain names into IP addresses.
@@ -86,7 +86,7 @@ index=botsv1 sourcetype=*dns "192.168.250.100" | search "query_type{}"=A |stats 
 **Answer: cerberhhyed5frqa.xmfir0.win**
 
 **203. What was the first suspicious domain visited by we8105desk on 24AUG2016?**
-**Ans**
+**Ans:**
 ## Analysis
 - To find the first domain accessed by the user, I slightly modified my previous query.
 - Instead of counting domains, I added time **(_time)** and removed the count so I could see the events in order.
@@ -103,6 +103,31 @@ index=botsv1 sourcetype=*dns "192.168.250.100" "query_type{}"=A |sort _time | ta
 •	The first domain which was accessed was solidaritedeproximite.org
 
 **Answer: solidaritedeproximite.org**
+
+**204. During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length of the value of this field?**
+**Ans:**
+## Analysis:-
+- To investigate the initial Cerber infection, I searched for VBScript execution using *VBS.
+- From the results, I found a suspicious command C:\Windows\System32\wscript.exe
+- wscript.exe is used to run VB scripts.
+- It was executed only once, which makes it suspicious.
+- It is likely used to run the ransomware script.
+- I then added this command to the filter to narrow down the results.
+- Next, I focused on the ParentCommandLine field, which contains.
+- The full VB script, along with the name of the .exe that launched it.
+- To find the answer, I calculated the length of this field using.
+```spl
+| eval length=len(ParentCommandLine)
+```
+### Full query
+```spl
+*VBS app="C:\\Windows\\SysWOW64\\wscript.exe"| eval length=len(ParentCommandLine)| table length
+```
+![Length](screenshots/length.png)
+
+**Answer: 4490**
+
+
 
 
 
