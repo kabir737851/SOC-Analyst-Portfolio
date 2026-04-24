@@ -184,6 +184,22 @@ index=botsv1 host=we9041srv "*.pdf" NOT "*.pdf.*" | stats dc(Relative_Target_Nam
 
 **210. The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?**
 **Ans:** 
+- To get the file name, we head back to Suricata and inspect the network packets.
+- We can look at the raw text of the suspicious domain we found earlier. We found a .jpg.
+- Enter Search: index=botsv1 sourcetype=suricata dest_ip="192.168.250.100" "http.hostname"="solidaritedeproximite.org"
+
+**Goal:** Identify the downloaded file that contains Cerber’s cryptor code.
+```spl
+index=botsv1 sourcetype=suricata dest_ip="192.168.250.100" "http.hostname"="solidaritedeproximite.org" earliest=08/24/2016:00:00:00 latest=08/25/2016:00:00:00
+| eval filename=coalesce(fileinfo.filename, http.uri)
+| table _time http.hostname http.uri filename
+| sort _time
+```
+**Validate:** Check related Suricata events for the full URI trail.
+![events](screenshots/events.png)
+![suricata](screenshots/suricata.png)
+
+**Answer: mhtr.jpg**
 
 **211. Now that you know the name of the ransomware's encryptor file, what obfuscation technique does it likely use?**
 **Ans:** The ransomware uses **steganography**, which means it hides its malicious code inside a normal-looking file so it doesn’t get noticed.
