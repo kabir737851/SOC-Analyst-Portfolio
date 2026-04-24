@@ -206,26 +206,48 @@ index=botsv1 sourcetype=suricata dest_ip="192.168.250.100" "http.hostname"="soli
 
 ## 📚 Lessons Learned
 
-**Early DNS pays off:** Filtering benign domains surfaces ransomware infra quickly.  
-> DNS timelines gave first touchpoints before heavy encryption noise appeared.
+**DNS helps early:** Removing normal domains helps find ransomware servers faster.  
+> DNS logs showed the first signs of attack before encryption started.
 
-**Process lineage matters:** Parent/child chains cut through endpoint noise.  
-> VBS → TMP → encryptor established causality you can act on.
+**Process flow is important:** Parent-child processes help track what happened.  
+> VBS → TMP → encryptor showed how the attack moved step by step.
 
-**Velocity > volume:** Write-rate spikes + new extensions are high-signal.  
-> Baselines made the abnormal file creation jumps obvious.
+**Speed matters more than volume:** Sudden file changes and new extensions are strong signals.  
+> Normal behavior helped spot unusual file activity quickly.
 
-**Registry is gold for ingress:** USB artifacts confirmed the lure.  
-> Friendly-name keys tied the story together.
+**Registry is useful:** USB details helped confirm how the attack started.  
+> Friendly names in registry connected the full story.
 
-**Quantify impact:** Distinct files encrypted on shares guide triage/comms.  
-> Counts per host/share prioritize isolation and recovery.
+**Measure the damage:** Counting encrypted files helps in response.  
+> Per system/share counts help decide what to fix first.
 
-**Repeatability wins:** Turn ad-hoc hunts into alerts/dashboards & RBA.  
-> Codifying detections shrinks MTTR and improves consistency.
+**Make it repeatable:** Convert manual work into alerts and dashboards.  
+> This reduces response time and improves consistency.
 
-**Evidence discipline:** IoCs + screenshots + exact times enable audits & clean handoffs.  
-> Makes IR documentation and lessons-learned actionable.
+**Keep proper evidence:** Save IoCs, screenshots, and exact times.  
+> Helps in reporting and future investigations.
+
+## Conclusion
+
+This lab helped turn a confusing ransomware attack into a clear flow:
+**compromise → containment → improvement**
+
+By analyzing logs from DNS, Suricata, Sysmon, and Registry, I was able to:
+- Find the first infected system (patient zero)  
+- Track how the malware was delivered  
+- Check how much damage was done  
+- Create detections that can be reused  
+
+This is the same process used in real SOC work:
+**observe → connect the data → confirm → improve security**
+
+Practicing this helps in responding faster and better to real cyber attacks.
+
+### Next Steps
+- Use **Risk-Based Alerting (RBA)** by combining multiple signals  
+- Add **SOAR automation** for faster response (like isolating systems and checking backups)
+
+![stages of ransomware attack](screenshots/sora.png)
 
 
 
