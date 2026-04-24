@@ -154,6 +154,36 @@ index=botsv1 sourcetype="stream:smb" src_ip="192.168.250.100" dest_port=445
 
 **Answer: 192.168.250.100**
 
+**207. How many distinct PDFs did the ransomware encrypt on the remote file server?**
+**Ans:**
+## Analysis
+- I first searched for all PDF-related activity using
+```spl
+index=botsv1 host=we9041srv *.pdf
+```
+- While reviewing the events, I observed that the file names were stored in the field **Relative_Target_Name (996\996339.pdf)**.
+![996](screenshots/996.png)
+- To list all PDF files and their occurrences, I used
+```spl
+index=botsv1 host=we9041srv *.pdf | stats count by Relative_Target_Name | sort -count
+```
+- This returned 258 unique entries. However, upon inspection, I identified an incorrect match
+```bash
+Windows\\system32\\windows.data.pdf.dll
+```
+![dll](screenshots/dll.png)
+- This is not an actual PDF file, **but a DLL file** that contains **.pdf** in its name, which caused a false positive.
+- To fix this, I refined the query to include only valid PDF files by excluding files where .pdf is not the final extension.
+```spl
+index=botsv1 host=we9041srv "*.pdf" NOT "*.pdf.*" | stats dc(Relative_Target_Name)
+```
+![final](screenshots/final.png)
+- This removed the false positive and provided the correct count.
+
+**Answer: 257 Pdf**
+
+
+
 
 
 
