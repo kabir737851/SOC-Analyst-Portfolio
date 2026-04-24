@@ -139,6 +139,22 @@ index=botsv1 host=we8105desk sourcetype="winregistry"  | search USBSTOR AND FRIE
 
 **Answer: USB device MIRANDA_PRI**
 
+**206. Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IPv4 address of the file server?**
+**Ans:**
+## Analysis:-
+- First, we find Bob’s computer (we8105desk) IP, which is **192.168.250.100**.
+- Since we are looking for a file server, we check traffic related to file sharing, which usually happens on **port 445 (SMB)**.
+- The query shows all file sharing connections made from Bob’s computer.
+- When we look at the results, we see that his computer is connecting to only one main IP address for file sharing.
+- That IP address is **192.168.250.20**, which means this is the file server involved during the attack.
+```spl
+index=botsv1 sourcetype="stream:smb" src_ip="192.168.250.100" dest_port=445
+```
+![IPv4](screenshots/IPv4address.png)
+
+**Answer: 192.168.250.100**
+
+
 
 
 
