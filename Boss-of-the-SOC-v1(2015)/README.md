@@ -182,6 +182,13 @@ index=botsv1 host=we9041srv "*.pdf" NOT "*.pdf.*" | stats dc(Relative_Target_Nam
 
 **Answer: 257 Pdf**
 
+**210. The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?**
+**Ans:** 
+
+**211. Now that you know the name of the ransomware's encryptor file, what obfuscation technique does it likely use?**
+**Ans:** The ransomware uses **steganography**, which means it hides its malicious code inside a normal-looking file so it doesn’t get noticed.
+
+
 
 
 
