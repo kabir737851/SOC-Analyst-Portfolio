@@ -243,9 +243,6 @@ This is the same process used in real SOC work:
 
 Practicing this helps in responding faster and better to real cyber attacks.
 
-### Next Steps
-- Use **Risk-Based Alerting (RBA)** by combining multiple signals  
-- Add **SOAR automation** for faster response (like isolating systems and checking backups)
 
 ![stages of ransomware attack](screenshots/sora.png)
 
