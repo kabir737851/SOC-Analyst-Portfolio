@@ -182,6 +182,30 @@ index=botsv1 host=we9041srv "*.pdf" NOT "*.pdf.*" | stats dc(Relative_Target_Nam
 
 **Answer: 257 Pdf**
 
+**208. The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?**
+**Ans:**
+- I first identified from question 204 that the VBScript launches 121214.tmp.
+- Then I searched for this file in the Sysmon logs to track its execution.
+```spl
+index=botsv1 "121214.tmp
+```
+- This helps confirm that the file exists in the logs and shows related activity.
+- To track execution properly, I filtered Sysmon process creation logs
+```spl
+index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1 "121214.tmp"
+```
+- EventCode=1 → shows process creation events
+- This is where parent-child relationships are recorded
+- I then displayed relevant fields
+```spl
+index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1 "121214.tmp" | table _time Image ParentImage ProcessId ParentProcessId CommandLine
+```
+- I sorted the events to get the first occurrence
+```spl
+index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1 "121214.tmp" | sort 0 _time | table _time Image ParentImage ParentProcessId
+```
+![VB Script ](screenshots/vbscript.png)
+
 **210. The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?**
 **Ans:** 
 - To get the file name, we head back to Suricata and inspect the network packets.
